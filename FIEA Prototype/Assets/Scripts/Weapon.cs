@@ -7,6 +7,7 @@ public class Weapon : MonoBehaviour
 {
     public Transform firePoint;
     public GameObject bulletPrefab;
+    public Transform bulletParent;
 
     private float bulletForce = 20f;
 
@@ -21,6 +22,7 @@ public class Weapon : MonoBehaviour
     private void Shoot()
     {
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        bullet.transform.parent = bulletParent;
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
 
         rb.AddForce(firePoint.forward * bulletForce, ForceMode.Impulse);

@@ -2,18 +2,32 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class TrainCar : MonoBehaviour
 {
     public Transform backOfCar;
+    public GameObject enemyPrefab;
+
+    [SerializeField]
+    private Transform SpawnParent;
+    private Transform[] SpawnPoints;
 
     [SerializeField]
     private float enemyCount;
 
-    public float carMaxHealth;
-    public float carMoveSpeed;
     public float carDamage;
-    public float carAttackSpeed;
+    [Range(0, 2)]
+    public float carAttackSpeed = 1;
+    [Range(0, 2)]
+    public float carMoveSpeed = 1;
+
+    private Stats _playerStats;
+    public int MaxEnemiesInCar;
+
+    private bool activeCar;
+    private bool SpawnTimer = true;
+    public List<EnemyController> ActiveEnemies = new List<EnemyController>();
 
     #region Dispaly Vars
     [Header("Display Information")]
@@ -25,26 +39,74 @@ public class TrainCar : MonoBehaviour
 
     void Start()
     {
-      
-      
+        //Sets Waypoints in Car
+        SpawnPoints = new Transform[SpawnParent.childCount];
+        for (int i = 0; i < SpawnPoints.Length; i++)
+        {
+            SpawnPoints[i] = SpawnParent.GetChild(i);
+        }
+
     }
 
     
     void Update()
     {
-        
+        if(activeCar)
+        {
+            if(SpawnTimer && ActiveEnemies.Count < MaxEnemiesInCar)
+            StartCoroutine(EnemySpawner());
+;       }
     }
 
-    void setText()
+    private IEnumerator EnemySpawner()
     {
+        int index = UnityEngine.Random.Range(0, SpawnPoints.Length);
+        EnemyController enemy = Instantiate(enemyPrefab, SpawnPoints[index].transform.position, Quaternion.Euler(0, 0, 0)).GetComponent<EnemyController>() ;
+        enemy.trainCar = this;
+        ActiveEnemies.Add(enemy);
 
+        enemyCount--;
+        if (enemyCount <= 0) activeCar = false;
+
+        SpawnTimer = false;
+        yield return new WaitForSeconds(5);
+        SpawnTimer = true;
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("Player"))
         {
-            GameController.instance.SetText(carName, carDescription);
+            GameController.instance.SetRoomText(carName, carDescription);
+            GetComponent<Collider>().enabled = false;
+            CalcRoomEffects();
+            activeCar = true;
         }
     }
+
+
+    #region Start/End Room Effects
+    public void CalcRoomEffects()
+    {
+        _playerStats = PlayerManager.instance.PlayerStats;
+
+        _playerStats.moveSpeed *= carMoveSpeed;
+        _playerStats.damage += carDamage;
+        _playerStats.attackSpeed *= carAttackSpeed;
+
+        PlayerManager.instance.PlayerStats = _playerStats;
+        PlayerManager.instance.PlayerStats.UpdateCurrentInEditor();
+    }
+
+    public void EndRoomEffects()
+    {
+        _playerStats = PlayerManager.instance.PlayerStats;
+
+        PlayerManager.instance.PlayerStats.moveSpeed /= carMoveSpeed;
+        PlayerManager.instance.PlayerStats.damage += carDamage;
+        PlayerManager.instance.PlayerStats.attackSpeed /= carAttackSpeed;
+
+        PlayerManager.instance.PlayerStats = _playerStats;
+    }
+    #endregion
 }

@@ -12,26 +12,19 @@ public class Inventory : MonoBehaviour
     #endregion
 
     public List<Item> _Inventory;
-
-    public void FullRecalculate()
-    {
-        foreach(Item item in _Inventory)
-        {
-            PlayerManager.instance.currentAttackSpeed += item.itemAttackSpeed;
-        }
-    }
+    public Stats _playerStats;
 
     public void CalcNewItem(Item item)
     {
-        PlayerManager.instance.currentMaxHealth += item.itemMaxHealth;
-        PlayerManager.instance.currentMoveSpeed += item.itemMoveSpeed;
-        PlayerManager.instance.currentDamage += item.itemDamage;
-        PlayerManager.instance.currentAttackSpeed += item.itemAttackSpeed;
+        _playerStats = PlayerManager.instance.PlayerStats;
+
+        _playerStats.maxHealth += item.itemMaxHealth;
+        _playerStats.moveSpeed *= item.itemMoveSpeed;
+        _playerStats.damage += item.itemDamage;
+        _playerStats.attackSpeed *= item.itemAttackSpeed;
+
+        PlayerManager.instance.PlayerStats = _playerStats;
+        PlayerManager.instance.PlayerStats.UpdateCurrentInEditor();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

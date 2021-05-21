@@ -25,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        rb.velocity = new Vector3(moveHorizontal * Manager.currentMoveSpeed, rb.velocity.y, moveVertical * Manager.currentMoveSpeed) * Time.deltaTime;
+        rb.velocity = new Vector3(moveHorizontal * Manager.PlayerStats.moveSpeed, rb.velocity.y, moveVertical * Manager.PlayerStats.moveSpeed) * Time.deltaTime;
     }
 
     void LookAtMouse()

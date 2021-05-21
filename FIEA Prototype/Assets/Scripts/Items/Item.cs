@@ -2,6 +2,11 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
+    [SerializeField]
+    private string itemName;
+    [SerializeField]
+    private string itemDesc;
+
 
     [Header("Item Stats")]
     public float itemMaxHealth;
@@ -14,6 +19,9 @@ public class Item : MonoBehaviour
         if(other.gameObject.CompareTag("Player"))
         {
             transform.SetParent(Inventory.instance.transform);
+           
+            StartCoroutine(GameController.instance.SetItemText(itemName, itemDesc));
+           
             gameObject.SetActive(false);
 
             Inventory.instance._Inventory.Add(this);
