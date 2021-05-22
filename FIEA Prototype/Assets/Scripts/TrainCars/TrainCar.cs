@@ -10,12 +10,16 @@ public class TrainCar : MonoBehaviour
     public GameObject enemyPrefab;
 
     [SerializeField]
-    private Transform SpawnParent;
+    private Transform SpawnParent, Enemies;
     private Transform[] SpawnPoints;
 
+    [Header("Enemy Info")]
+    public int MaxEnemiesInCar;
     [SerializeField]
-    private float enemyCount;
+    private float enemiesToSpawn, timeBtwnEnemySpawn;
 
+
+    [Header("Plater Stat Changes")]
     public float carDamage;
     [Range(0, 2)]
     public float carAttackSpeed = 1;
@@ -23,9 +27,9 @@ public class TrainCar : MonoBehaviour
     public float carMoveSpeed = 1;
 
     private Stats _playerStats;
-    public int MaxEnemiesInCar;
+   
 
-    private bool activeCar;
+    public bool activeCar;
     private bool SpawnTimer = true;
     public List<EnemyController> ActiveEnemies = new List<EnemyController>();
 
@@ -61,12 +65,13 @@ public class TrainCar : MonoBehaviour
     private IEnumerator EnemySpawner()
     {
         int index = UnityEngine.Random.Range(0, SpawnPoints.Length);
-        EnemyController enemy = Instantiate(enemyPrefab, SpawnPoints[index].transform.position, Quaternion.Euler(0, 0, 0)).GetComponent<EnemyController>() ;
+        EnemyController enemy = Instantiate(enemyPrefab, SpawnPoints[index].transform.position, Quaternion.Euler(0, 0, 0)).GetComponent<EnemyController>();
+        enemy.gameObject.transform.parent = Enemies;
         enemy.trainCar = this;
         ActiveEnemies.Add(enemy);
 
-        enemyCount--;
-        if (enemyCount <= 0) activeCar = false;
+        enemiesToSpawn--;
+        if (enemiesToSpawn <= 0) activeCar = false;
 
         SpawnTimer = false;
         yield return new WaitForSeconds(5);

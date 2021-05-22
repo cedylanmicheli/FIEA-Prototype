@@ -18,11 +18,12 @@ public class Item : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Player"))
         {
+            this.GetComponent<Collider>().enabled = false;
             transform.SetParent(Inventory.instance.transform);
            
             StartCoroutine(GameController.instance.SetItemText(itemName, itemDesc));
            
-            gameObject.SetActive(false);
+            //gameObject.SetActive(false);
 
             Inventory.instance._Inventory.Add(this);
             Inventory.instance.CalcNewItem(this);

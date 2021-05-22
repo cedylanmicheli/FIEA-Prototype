@@ -172,6 +172,36 @@ Transform:
   m_Father: {fileID: 7885460910344890645}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &775745692795479258
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6194232653595574819}
+  m_Layer: 0
+  m_Name: Enemies
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6194232653595574819
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 775745692795479258}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7885460910344890645}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1277265275295452136
 GameObject:
   m_ObjectHideFlags: 0
@@ -821,6 +851,8 @@ Transform:
   - {fileID: 7885460910161309139}
   - {fileID: 6367431898136292210}
   - {fileID: 8970421019319910126}
+  - {fileID: 6194232653595574819}
+  - {fileID: 6195129743962124362}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -852,11 +884,14 @@ MonoBehaviour:
   backOfCar: {fileID: 7885460910107911452}
   enemyPrefab: {fileID: 8341956474824443764, guid: 63c042ea8cb4a434abb61057e255d14a, type: 3}
   SpawnParent: {fileID: 8970421019319910126}
-  enemyCount: 10
+  Enemies: {fileID: 6194232653595574819}
+  MaxEnemiesInCar: 5
+  enemiesToSpawn: 3
+  timeBtwnEnemySpawn: 1
   carDamage: 0
   carAttackSpeed: 1
   carMoveSpeed: 0.75
-  MaxEnemiesInCar: 5
+  activeCar: 0
   ActiveEnemies: []
   carName: Joe Moma's Car
   carDescription: 75% Move Speed
@@ -1051,6 +1086,36 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &8014142352430008221
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6195129743962124362}
+  m_Layer: 0
+  m_Name: Item Spawn Point
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6195129743962124362
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8014142352430008221}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 97.75, y: 0, z: -6.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7885460910344890645}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8111479006925820086
 GameObject:
   m_ObjectHideFlags: 0

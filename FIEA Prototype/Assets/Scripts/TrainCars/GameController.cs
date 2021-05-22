@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using TMPro;
 using System.Collections;
+using System.Collections.Generic;
 
 public class GameController : MonoBehaviour
 {
@@ -15,16 +16,17 @@ public class GameController : MonoBehaviour
     }
     #endregion
 
-    public GameObject trainCar;
+    public List<GameObject> trainCars = new List<GameObject>();
 
     public int carCount;
+    
     private Vector3 initalSpawn = new Vector3(0, 0, 0);
-    private float itemDescTime = 7.5f;
+    
 
-    public TextMeshProUGUI carName;
-    public TextMeshProUGUI carDescription;
-    public TextMeshProUGUI itemName;
-    public TextMeshProUGUI itemDescription;
+    [Header("TMP")][SerializeField]
+    private float itemDescTime = 7.5f;
+    [SerializeField]
+    private TextMeshProUGUI carName, carDescription, itemName, itemDescription;
 
     private void Start()
     {
@@ -34,20 +36,24 @@ public class GameController : MonoBehaviour
         itemName.text = "";
     }
 
-    public void SetRoomText(string name, string desc)
+    public void SetRoomText(string _carName, string _carDescription)
     {
-        carName.text = name;
-        carDescription.text = desc;
+        carName.text = _carName;
+        carDescription.text = _carDescription;
     }
 
     void GenerateCars()
     {
-        GameObject currentCar = Instantiate(trainCar, initalSpawn, Quaternion.Euler(0, 0, 0));
+        GameObject currentCar = Instantiate(trainCars[0], initalSpawn, Quaternion.Euler(0, 0, 0));
+        trainCars.RemoveAt(0);
 
         for (int i = 0; i < carCount - 1; i++)
         {
             GameObject previousCar = currentCar;
-            currentCar = Instantiate(trainCar, previousCar.GetComponent<TrainCar>().backOfCar.position, Quaternion.Euler(0, 0, 0));
+
+            int index = UnityEngine.Random.Range(0, trainCars.Count );
+            currentCar = Instantiate(trainCars[index], previousCar.GetComponent<TrainCar>().backOfCar.position, Quaternion.Euler(0, 0, 0));
+            trainCars.RemoveAt(index);
         }
 
         UnityEditor.AI.NavMeshBuilder.BuildNavMesh();
