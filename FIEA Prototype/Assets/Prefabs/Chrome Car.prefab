@@ -1272,7 +1272,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   backOfCar: {fileID: 7885460910107911452}
-  enemyPrefab: {fileID: 8341956474824443764, guid: 63c042ea8cb4a434abb61057e255d14a, type: 3}
+  enemyPrefab: {fileID: 2667598831705617296, guid: 463c2690245b6dc4caabe975bc2a9450, type: 3}
   SpawnParent: {fileID: 8970421019319910126}
   Enemies: {fileID: 8341956474824443761, guid: 63c042ea8cb4a434abb61057e255d14a, type: 3}
   MaxEnemiesInCar: 8

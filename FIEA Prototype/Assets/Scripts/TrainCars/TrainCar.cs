@@ -95,6 +95,7 @@ public class TrainCar : MonoBehaviour
         GetComponent<Collider>().enabled = false;
         CalcRoomEffects();
         activeCar = true;
+        GameController.instance.activeCar = this;
     }
 
     #region Start/End Room Effects

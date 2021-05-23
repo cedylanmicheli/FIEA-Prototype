@@ -11,12 +11,15 @@ public class EnemyController : MonoBehaviour
     public TrainCar trainCar;
 
     public Transform target;
-    NavMeshAgent agent;
+    public NavMeshAgent agent;
 
-    void Start()
+    void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         target = PlayerManager.instance.player.transform;
+
+        trainCar =GameController.instance.activeCar;
+    
     }
 
     void Update()

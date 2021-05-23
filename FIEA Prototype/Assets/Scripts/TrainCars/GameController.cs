@@ -21,6 +21,8 @@ public class GameController : MonoBehaviour
     public int carCount;
     
     private Vector3 initalSpawn = new Vector3(0, 0, 0);
+
+    public TrainCar activeCar;
     
 
     [Header("TMP")][SerializeField]

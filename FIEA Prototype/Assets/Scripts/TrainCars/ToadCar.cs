@@ -14,12 +14,12 @@ public class ToadCar : MonoBehaviour
         parentCar = GetComponent<TrainCar>();
     }
 
-    public void OnTriggerEnter(Collider other)
-    {
-        if(other.CompareTag("Enemy"))
-        {
-            ToadCarEnemies toadEnemy = other.gameObject.AddComponent<ToadCarEnemies>();
-            toadEnemy.toadTarget = toadObj;
-        }
-    }
+   // public void OnTriggerEnter(Collider other)
+   // {
+   //     if(other.CompareTag("Enemy"))
+   //     {
+   //         ToadCarEnemies toadEnemy = other.gameObject.AddComponent<ToadCarEnemies>();
+   //         toadEnemy.toadTarget = toadObj;
+   //     }
+   // }
 }

@@ -8,7 +8,7 @@ public class ToadCarEnemies : MonoBehaviour
 
     private  int currentTarget = 0; //0 == player, 1 == frog
 
-    void Start()
+    void Awake()
     {
         parent = GetComponent<EnemyController>();   
         playerTarget = PlayerManager.instance.player.transform;
