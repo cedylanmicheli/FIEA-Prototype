@@ -30,6 +30,7 @@ public class TrainCar : MonoBehaviour
    
 
     public bool activeCar;
+    public bool carCompleted = false;
     private bool SpawnTimer = true;
     public List<EnemyController> ActiveEnemies = new List<EnemyController>();
 
@@ -55,11 +56,12 @@ public class TrainCar : MonoBehaviour
     
     void Update()
     {
-        if(activeCar)
+        if (activeCar)
         {
-            if(SpawnTimer && ActiveEnemies.Count < MaxEnemiesInCar)
-            StartCoroutine(EnemySpawner());
-;       }
+            if (SpawnTimer && ActiveEnemies.Count < MaxEnemiesInCar)
+                StartCoroutine(EnemySpawner());
+            else if (enemiesToSpawn <= 0) activeCar = false;
+        }
     }
 
     private IEnumerator EnemySpawner()
@@ -78,17 +80,21 @@ public class TrainCar : MonoBehaviour
         SpawnTimer = true;
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.CompareTag("Player"))
-        {
-            GameController.instance.SetRoomText(carName, carDescription);
-            GetComponent<Collider>().enabled = false;
-            CalcRoomEffects();
-            activeCar = true;
-        }
-    }
+  //  private void OnTriggerEnter(Collider other)
+  //  {
+  //      if(other.CompareTag("Player"))
+  //      {
+  //          ActivateCar();
+  //      }
+  //  }
 
+    public void ActivateCar()
+    {
+        GameController.instance.SetRoomText(carName, carDescription);
+        GetComponent<Collider>().enabled = false;
+        CalcRoomEffects();
+        activeCar = true;
+    }
 
     #region Start/End Room Effects
     public void CalcRoomEffects()
