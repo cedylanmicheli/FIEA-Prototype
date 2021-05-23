@@ -21,23 +21,26 @@ public class ChromeCar : MonoBehaviour
         if(trainCar.activeCar && !scriptActive)
         {
             scriptActive = true;
-            StartCoroutine(EnemyDuplicator());
+         //   StartCoroutine(EnemyDuplicator());
         }
     }
 
-    private IEnumerator EnemyDuplicator()
-    {
-        yield return new WaitForSeconds(enemyDuplicateTimer);
-
-        GameObject enemyToDupe = trainCar.ActiveEnemies[UnityEngine.Random.Range(0, trainCar.ActiveEnemies.Count)].gameObject;
-        Transform spawnPosition = enemyToDupe.transform;
-
-        yield return new WaitForSeconds(1);
-
-        EnemyController enemy = Instantiate(trainCar.enemyPrefab, spawnPosition.position, Quaternion.Euler(0, 0, 0)).GetComponent<EnemyController>();
-        enemy.trainCar = trainCar;
-        trainCar.ActiveEnemies.Add(enemy);
-    }
+ //  private IEnumerator EnemyDuplicator()
+ //  {
+ //      yield return new WaitForSeconds(enemyDuplicateTimer);
+ //
+ //      if(trainCar.ActiveEnemies !nu)
+ //      GameObject enemyToDupe = trainCar.ActiveEnemies[UnityEngine.Random.Range(0, trainCar.ActiveEnemies.Count)].gameObject;
+ //      Transform spawnPosition = enemyToDupe.transform;
+ //
+ //     // yield return new WaitForSeconds(1);
+ //
+ //      EnemyController enemy = Instantiate(trainCar.enemyPrefab, spawnPosition.position, Quaternion.Euler(0, 0, 0)).GetComponent<EnemyController>();
+ //      enemy.trainCar = trainCar;
+ //      trainCar.ActiveEnemies.Add(enemy);
+ //
+ //      StartCoroutine(EnemyDuplicator());
+ //  }
 }
 
 

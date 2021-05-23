@@ -8,6 +8,7 @@ public class TrainCar : MonoBehaviour
 {
     public Transform backOfCar;
     public GameObject enemyPrefab;
+    
 
     [SerializeField]
     private Transform SpawnParent, Enemies;
@@ -68,7 +69,7 @@ public class TrainCar : MonoBehaviour
     {
         int index = UnityEngine.Random.Range(0, SpawnPoints.Length);
         EnemyController enemy = Instantiate(enemyPrefab, SpawnPoints[index].transform.position, Quaternion.Euler(0, 0, 0)).GetComponent<EnemyController>();
-        enemy.gameObject.transform.parent = Enemies;
+        //enemy.gameObject.transform.parent = Enemies;
         enemy.trainCar = this;
         ActiveEnemies.Add(enemy);
 

@@ -10,7 +10,7 @@ public class EnemyController : MonoBehaviour
 
     public TrainCar trainCar;
 
-    Transform target;
+    public Transform target;
     NavMeshAgent agent;
 
     void Start()
