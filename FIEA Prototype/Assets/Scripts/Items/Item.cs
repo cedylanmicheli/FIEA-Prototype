@@ -9,7 +9,7 @@ public class Item : MonoBehaviour
 
 
     [Header("Item Stats")]
-    public float itemMaxHealth;
+    public int itemMaxHealth;
     public float itemMoveSpeed;
     public float itemDamage;
     public float itemAttackSpeed;

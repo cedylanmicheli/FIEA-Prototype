@@ -9,7 +9,7 @@ public class Weapon : MonoBehaviour
     public GameObject bulletPrefab;
     public Transform bulletParent;
 
-    private float bulletForce = 20f;
+    public float bulletForce = 20f;
 
     void Update()
     {

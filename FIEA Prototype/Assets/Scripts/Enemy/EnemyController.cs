@@ -13,6 +13,8 @@ public class EnemyController : MonoBehaviour
     public Transform target;
     public NavMeshAgent agent;
 
+    public int damage;
+
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -33,12 +35,26 @@ public class EnemyController : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, lookRadius);
     }
 
-    public void HitCheck()
-    {
-        if(enemyHealth <= 0)
-        {
-            trainCar.ActiveEnemies.Remove(this);
-            Destroy(gameObject);
+//   public void HitCheck()
+//   {
+//       if (enemyHealth <= 0)
+//       {
+//           trainCar.ActiveEnemies.Remove(this);
+//           Destroy(gameObject);
+//       }
+//   }
+
+   private void OnCollisionEnter(Collision collision)
+   {
+       if (collision.gameObject.CompareTag("Bullet"))
+       {
+            enemyHealth -= PlayerManager.instance.PlayerStats.damage;
+
+            if (enemyHealth <= 0)
+            {
+                trainCar.ActiveEnemies.Remove(this);
+                Destroy(gameObject);
+            }
         }
-    }
+   }
 }

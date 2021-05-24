@@ -77,17 +77,9 @@ public class TrainCar : MonoBehaviour
         if (enemiesToSpawn <= 0) activeCar = false;
 
         SpawnTimer = false;
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(timeBtwnEnemySpawn);
         SpawnTimer = true;
     }
-
-  //  private void OnTriggerEnter(Collider other)
-  //  {
-  //      if(other.CompareTag("Player"))
-  //      {
-  //          ActivateCar();
-  //      }
-  //  }
 
     public void ActivateCar()
     {
@@ -97,6 +89,7 @@ public class TrainCar : MonoBehaviour
         activeCar = true;
         GameController.instance.activeCar = this;
     }
+
 
     #region Start/End Room Effects
     public void CalcRoomEffects()
@@ -115,11 +108,12 @@ public class TrainCar : MonoBehaviour
     {
         _playerStats = PlayerManager.instance.PlayerStats;
 
-        PlayerManager.instance.PlayerStats.moveSpeed /= carMoveSpeed;
-        PlayerManager.instance.PlayerStats.damage += carDamage;
-        PlayerManager.instance.PlayerStats.attackSpeed /= carAttackSpeed;
+        _playerStats.moveSpeed /= carMoveSpeed;
+        _playerStats.damage -= carDamage;
+        _playerStats.attackSpeed /= carAttackSpeed;
 
         PlayerManager.instance.PlayerStats = _playerStats;
+        PlayerManager.instance.PlayerStats.UpdateCurrentInEditor();
     }
     #endregion
 }
