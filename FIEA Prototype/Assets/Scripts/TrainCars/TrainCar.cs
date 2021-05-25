@@ -21,14 +21,21 @@ public class TrainCar : MonoBehaviour
 
 
     [Header("Plater Stat Changes")]
-    public float carDamage;
+    [Range(0, 2)]
+    public float carDamage = 1;
     [Range(0, 2)]
     public float carAttackSpeed = 1;
     [Range(0, 2)]
     public float carMoveSpeed = 1;
 
     private Stats _playerStats;
-   
+
+    [Header("Enemy Stat Changes")]
+    [Range(0, 2)]
+    public float enemyAddDamage = 1;
+    [Range(0, 2)]
+    public float enemyMoveSpeed = 1;
+
 
     public bool activeCar;
     public bool carCompleted = false;
@@ -71,6 +78,10 @@ public class TrainCar : MonoBehaviour
         EnemyController enemy = Instantiate(enemyPrefab, SpawnPoints[index].transform.position, Quaternion.Euler(0, 0, 0)).GetComponent<EnemyController>();
         //enemy.gameObject.transform.parent = Enemies;
         enemy.trainCar = this;
+        
+        enemy.damage *= enemyAddDamage;
+        enemy.agent.speed *= enemyMoveSpeed;
+
         ActiveEnemies.Add(enemy);
 
         enemiesToSpawn--;
@@ -97,7 +108,7 @@ public class TrainCar : MonoBehaviour
         _playerStats = PlayerManager.instance.PlayerStats;
 
         _playerStats.moveSpeed *= carMoveSpeed;
-        _playerStats.damage += carDamage;
+        _playerStats.damage *= carDamage;
         _playerStats.attackSpeed *= carAttackSpeed;
 
         PlayerManager.instance.PlayerStats = _playerStats;
@@ -109,7 +120,7 @@ public class TrainCar : MonoBehaviour
         _playerStats = PlayerManager.instance.PlayerStats;
 
         _playerStats.moveSpeed /= carMoveSpeed;
-        _playerStats.damage -= carDamage;
+        _playerStats.damage /= carDamage;
         _playerStats.attackSpeed /= carAttackSpeed;
 
         PlayerManager.instance.PlayerStats = _playerStats;

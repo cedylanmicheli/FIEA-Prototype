@@ -29,4 +29,19 @@ public class ToadCarEnemies : MonoBehaviour
             currentTarget = 1;
         }
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag("Toad"))
+        {
+            DamageAndDestroy();
+        }
+    }
+
+    public void DamageAndDestroy()
+    {
+        PlayerManager.instance.DamagePlayer((int)parent.damage);
+        GameController.instance.activeCar.ActiveEnemies.Remove(parent);
+        Destroy(parent.gameObject);
+    }
 }

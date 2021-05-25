@@ -37,7 +37,7 @@ public class PlayerManager : MonoBehaviour
         if(collision.gameObject.CompareTag("Enemy"))
         {
             EnemyController enemy = collision.gameObject.GetComponent<EnemyController>();
-            DamagePlayer(enemy.damage);
+            DamagePlayer((int)enemy.damage);
             Destroy(enemy.gameObject);
         }
     }

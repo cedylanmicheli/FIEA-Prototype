@@ -5,7 +5,8 @@ using UnityEngine.AI;
 
 public class EnemyController : MonoBehaviour
 {
-    public float enemyHealth = 50;
+    public float enemyHealth = 50f;
+    public float enemySpeed = 3f;
     public float lookRadius = 10f;
 
     public TrainCar trainCar;
@@ -13,7 +14,7 @@ public class EnemyController : MonoBehaviour
     public Transform target;
     public NavMeshAgent agent;
 
-    public int damage;
+    public float damage;
 
     void Awake()
     {
@@ -35,14 +36,6 @@ public class EnemyController : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, lookRadius);
     }
 
-//   public void HitCheck()
-//   {
-//       if (enemyHealth <= 0)
-//       {
-//           trainCar.ActiveEnemies.Remove(this);
-//           Destroy(gameObject);
-//       }
-//   }
 
    private void OnCollisionEnter(Collision collision)
    {

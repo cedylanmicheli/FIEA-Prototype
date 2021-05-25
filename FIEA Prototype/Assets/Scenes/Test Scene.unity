@@ -947,11 +947,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trainCars:
+  - {fileID: 7885460910344890667, guid: 9e1ff302ff562d54f8a580ee890099bd, type: 3}
   - {fileID: 7885460910344890667, guid: 1282b2a0e7212eb4bb41c4598afa6abe, type: 3}
+  - {fileID: 7885460910344890667, guid: c67d1fd7ad701244f81e2245fd409e23, type: 3}
+  - {fileID: 7885460910344890667, guid: 599a4a0d6b917424db3d53d2d7ef3f42, type: 3}
   - {fileID: 7885460910344890667, guid: 5fc9f2b040a8a914bafb177167af8cdb, type: 3}
-  - {fileID: 7885460910344890667, guid: c67d1fd7ad701244f81e2245fd409e23, type: 3}
-  - {fileID: 7885460910344890667, guid: c67d1fd7ad701244f81e2245fd409e23, type: 3}
-  carCount: 3
+  carCount: 5
   activeCar: {fileID: 0}
   itemDescTime: 7.5
   carName: {fileID: 1603491854}
