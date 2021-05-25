@@ -11,6 +11,13 @@ public class Weapon : MonoBehaviour
 
     public float bulletForce = 20f;
 
+    public Vector3 bulletScale;
+
+    private void Awake()
+    {
+        bulletScale = bulletPrefab.transform.localScale;
+    }
+
     void Update()
     {
         if(Input.GetButtonDown("Fire1"))
@@ -22,6 +29,8 @@ public class Weapon : MonoBehaviour
     private void Shoot()
     {
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        bullet.transform.localScale = bulletScale;
+
         bullet.transform.parent = bulletParent;
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
 

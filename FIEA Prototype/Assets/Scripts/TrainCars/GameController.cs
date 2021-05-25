@@ -61,7 +61,7 @@ public class GameController : MonoBehaviour
         UnityEditor.AI.NavMeshBuilder.BuildNavMesh();
     }
 
-    public IEnumerator SetItemText(string _itemName, string _itemDescription )
+    public IEnumerator SetItemText(string _itemName, string _itemDescription, Item item )
     {
         itemDescription.text = _itemDescription;
         itemName.text = _itemName;
@@ -70,5 +70,6 @@ public class GameController : MonoBehaviour
         
         itemDescription.text = "";
         itemName.text = "";
+        item.gameObject.SetActive(false);
     }
 }

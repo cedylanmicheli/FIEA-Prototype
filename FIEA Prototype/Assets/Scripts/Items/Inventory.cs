@@ -20,9 +20,12 @@ public class Inventory : MonoBehaviour
 
         _playerStats.maxHealth += item.itemMaxHealth;
         _playerStats.moveSpeed *= item.itemMoveSpeed;
-        _playerStats.damage += item.itemDamage;
+        _playerStats.damage *= item.itemDamage;
         _playerStats.attackSpeed *= item.itemAttackSpeed;
 
+        _playerStats.health += item.itemMaxHealth;
+
+        PlayerManager.instance.healthBar.SetMaxHealth(_playerStats.maxHealth);
         PlayerManager.instance.PlayerStats = _playerStats;
         PlayerManager.instance.PlayerStats.UpdateCurrentInEditor();
     }
