@@ -13,6 +13,7 @@ public class Inventory : MonoBehaviour
 
     public List<Item> _Inventory;
     public Stats _playerStats;
+    public int healthOnPickup = 15;
 
     public void CalcNewItem(Item item)
     {
@@ -23,7 +24,7 @@ public class Inventory : MonoBehaviour
         _playerStats.damage *= item.itemDamage;
         _playerStats.attackSpeed *= item.itemAttackSpeed;
 
-        _playerStats.health += item.itemMaxHealth;
+        _playerStats.health = Mathf.Clamp(_playerStats.health + healthOnPickup, 0, _playerStats.maxHealth);
 
         PlayerManager.instance.healthBar.SetMaxHealth(_playerStats.maxHealth);
         PlayerManager.instance.PlayerStats = _playerStats;

@@ -14,6 +14,8 @@ public class TrainCar : MonoBehaviour
     private Transform SpawnParent, Enemies;
     private Transform[] SpawnPoints;
 
+    public Transform itemSpawnLocation;
+
     [Header("Enemy Info")]
     public int MaxEnemiesInCar;
     [SerializeField]
@@ -27,6 +29,10 @@ public class TrainCar : MonoBehaviour
     public float carAttackSpeed = 1;
     [Range(0, 2)]
     public float carMoveSpeed = 1;
+    public Vector3 carPlayerScale = new Vector3(1, 1, 1);
+
+
+    private Vector3 defaultPlayerScale;
 
     private Stats _playerStats;
 
@@ -35,6 +41,7 @@ public class TrainCar : MonoBehaviour
     public float enemyAddDamage = 1;
     [Range(0, 2)]
     public float enemyMoveSpeed = 1;
+    public Vector3 enemyScale = new Vector3(1, 1, 1);
 
 
     public bool activeCar;
@@ -59,6 +66,8 @@ public class TrainCar : MonoBehaviour
             SpawnPoints[i] = SpawnParent.GetChild(i);
         }
 
+        defaultPlayerScale = PlayerManager.instance.player.transform.localScale;
+
     }
 
     
@@ -66,9 +75,9 @@ public class TrainCar : MonoBehaviour
     {
         if (activeCar)
         {
-            if (SpawnTimer && ActiveEnemies.Count < MaxEnemiesInCar)
+            if (SpawnTimer && ActiveEnemies.Count < MaxEnemiesInCar && enemiesToSpawn > 0)
                 StartCoroutine(EnemySpawner());
-            else if (enemiesToSpawn <= 0) activeCar = false;
+            else FinishCheck();
         }
     }
 
@@ -78,25 +87,38 @@ public class TrainCar : MonoBehaviour
         EnemyController enemy = Instantiate(enemyPrefab, SpawnPoints[index].transform.position, Quaternion.Euler(0, 0, 0)).GetComponent<EnemyController>();
         //enemy.gameObject.transform.parent = Enemies;
         enemy.trainCar = this;
-        
-        enemy.damage *= enemyAddDamage;
-        enemy.agent.speed *= enemyMoveSpeed;
+
+        ChangeEnemyStats(enemy);
 
         ActiveEnemies.Add(enemy);
 
         enemiesToSpawn--;
-        if (enemiesToSpawn <= 0) activeCar = false;
 
         SpawnTimer = false;
         yield return new WaitForSeconds(timeBtwnEnemySpawn);
         SpawnTimer = true;
     }
 
+    public void FinishCheck()
+    {
+        if(ActiveEnemies.Count == 0 && enemiesToSpawn <= 0)
+        {
+            activeCar = false;
+            if (gameObject.name.Equals("Tutorial Car(Clone)") == false) // this is kinda gross, fix this
+            {
+                GameController.instance.SetRoomText("car complete!", "get your item on the way out!");
+                //play audio chime
+                GameController.instance.SpawnItem();
+            }
+            carCompleted = true;
+        }
+    }
+
     public void ActivateCar()
     {
         GameController.instance.SetRoomText(carName, carDescription);
-        GetComponent<Collider>().enabled = false;
         CalcRoomEffects();
+        
         activeCar = true;
         GameController.instance.activeCar = this;
     }
@@ -111,6 +133,9 @@ public class TrainCar : MonoBehaviour
         _playerStats.damage *= carDamage;
         _playerStats.attackSpeed *= carAttackSpeed;
 
+        PlayerManager.instance.player.transform.localScale = carPlayerScale;
+        if (carAttackSpeed > 1) PlayerManager.instance.player.GetComponent<Weapon>().bulletForce *= carAttackSpeed;
+
         PlayerManager.instance.PlayerStats = _playerStats;
         PlayerManager.instance.PlayerStats.UpdateCurrentInEditor();
     }
@@ -123,8 +148,18 @@ public class TrainCar : MonoBehaviour
         _playerStats.damage /= carDamage;
         _playerStats.attackSpeed /= carAttackSpeed;
 
+        PlayerManager.instance.player.transform.localScale = defaultPlayerScale;
+        if (carAttackSpeed > 1) PlayerManager.instance.player.GetComponent<Weapon>().bulletForce /= carAttackSpeed;
+
         PlayerManager.instance.PlayerStats = _playerStats;
         PlayerManager.instance.PlayerStats.UpdateCurrentInEditor();
+    }
+
+    private void ChangeEnemyStats(EnemyController enemy)
+    {
+        enemy.damage *= enemyAddDamage;
+        enemy.agent.speed *= enemyMoveSpeed;
+        enemy.transform.localScale = enemyScale;
     }
     #endregion
 }

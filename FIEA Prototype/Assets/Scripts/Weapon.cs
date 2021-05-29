@@ -12,6 +12,7 @@ public class Weapon : MonoBehaviour
     public float bulletForce = 20f;
 
     public Vector3 bulletScale;
+    private float bulletTimer;
 
     private void Awake()
     {
@@ -20,8 +21,11 @@ public class Weapon : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetButtonDown("Fire1"))
+        bulletTimer -= PlayerManager.instance.PlayerStats.attackSpeed * Time.deltaTime;
+        if(Input.GetButton("Fire1") && bulletTimer <= 0)
         {
+
+            bulletTimer = .5f;
             Shoot();
         }
     }

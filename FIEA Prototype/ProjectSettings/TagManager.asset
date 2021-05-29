@@ -8,6 +8,7 @@ TagManager:
   - Toad
   - Bullet
   - Bouncer
+  - Background Reset
   layers:
   - Default
   - TransparentFX

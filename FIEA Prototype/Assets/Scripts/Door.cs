@@ -38,7 +38,7 @@ public class Door : MonoBehaviour
             }
             else if (_doorType == DoorType.Exit && _triggerType == TriggerType.EnterTrigger)
             {
-                if(parentCar.activeCar == false)
+                if(parentCar.carCompleted == true)
                 {
                     doorModelObj.GetComponent<BoxCollider>().enabled = false;
                     doorModelObj.GetComponent<MeshRenderer>().enabled = false;

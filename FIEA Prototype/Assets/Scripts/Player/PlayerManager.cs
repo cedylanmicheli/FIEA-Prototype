@@ -9,18 +9,13 @@ public class PlayerManager : MonoBehaviour
     {
         instance = this;
 
-        StartCurrentStats();
+        SetStartingStats();
 
         healthBar.SetMaxHealth(PlayerStats.maxHealth);
         healthBar.SetHealth(PlayerStats.health);
     }
-    #endregion
 
-    public GameObject player;
-    public Stats PlayerStats;
-    public HeathBar healthBar;
-
-    private void StartCurrentStats()
+    private void SetStartingStats()
     {
         PlayerStats = new Stats();
         PlayerStats.maxHealth = baseMaxHealth;
@@ -32,12 +27,19 @@ public class PlayerManager : MonoBehaviour
         PlayerStats.UpdateCurrentInEditor();
     }
 
+    #endregion
+
+    public GameObject player;
+    public Stats PlayerStats;
+    public HeathBar healthBar;
+
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.CompareTag("Enemy"))
         {
             EnemyController enemy = collision.gameObject.GetComponent<EnemyController>();
             DamagePlayer((int)enemy.damage);
+            GameController.instance.activeCar.ActiveEnemies.Remove(enemy);
             Destroy(enemy.gameObject);
         }
     }
@@ -47,6 +49,14 @@ public class PlayerManager : MonoBehaviour
         PlayerStats.health -= damage;
         healthBar.SetHealth(PlayerStats.health);
         PlayerStats.UpdateCurrentInEditor();
+
+        if(PlayerStats.health <= 0) //Game Over
+        {
+            GameController.instance.menuObj.SetActive(true);
+            GameController.instance.activeCar.activeCar = false;
+            Destroy(gameObject);
+            //GameController.instance.activeCar.ActiveEnemies.Clear();
+        }
     }
 
     #region PLAYER STATS

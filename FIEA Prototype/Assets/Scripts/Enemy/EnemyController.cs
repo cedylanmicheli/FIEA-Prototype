@@ -22,12 +22,11 @@ public class EnemyController : MonoBehaviour
         target = PlayerManager.instance.player.transform;
 
         trainCar =GameController.instance.activeCar;
-    
     }
 
     void Update()
     {
-        agent.SetDestination(target.position);
+        if(target != null)agent.SetDestination(target.position);
     }
 
     private void OnDrawGizmosSelected()
@@ -46,6 +45,7 @@ public class EnemyController : MonoBehaviour
             if (enemyHealth <= 0)
             {
                 trainCar.ActiveEnemies.Remove(this);
+                trainCar.FinishCheck();
                 Destroy(gameObject);
             }
         }

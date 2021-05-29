@@ -3,7 +3,6 @@
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]
-    private Rigidbody rb;
     private CharacterController cc;
 
     private PlayerManager Manager;
@@ -11,7 +10,6 @@ public class PlayerMovement : MonoBehaviour
 
     void Start()
     {
-        //rb = GetComponent<Rigidbody>();
         cc = GetComponent<CharacterController>();
         Manager = GetComponent<PlayerManager>();
     }
@@ -28,11 +26,6 @@ public class PlayerMovement : MonoBehaviour
         LookAtMouse();
     }
 
-
-    void FixedUpdate()
-    {
-        //rb.velocity = new Vector3(moveHorizontal * Manager.PlayerStats.moveSpeed, rb.velocity.y, moveVertical * Manager.PlayerStats.moveSpeed) * Time.deltaTime;
-    }
 
     void LookAtMouse()
     {

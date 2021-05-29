@@ -16,19 +16,20 @@ public class GameController : MonoBehaviour
     }
     #endregion
 
+    [Header("Car Spawn Info")]
+    [SerializeField]
+    private int carCount;
     public List<GameObject> trainCars = new List<GameObject>();
-
-    public int carCount;
-    
+    public List<GameObject> itemList = new List<GameObject>();
     private Vector3 initalSpawn = new Vector3(0, 0, 0);
 
     public TrainCar activeCar;
     
-
     [Header("TMP")][SerializeField]
     private float itemDescTime = 7.5f;
     [SerializeField]
     private TextMeshProUGUI carName, carDescription, itemName, itemDescription;
+    public GameObject menuObj;
 
     private void Start()
     {
@@ -38,11 +39,6 @@ public class GameController : MonoBehaviour
         itemName.text = "";
     }
 
-    public void SetRoomText(string _carName, string _carDescription)
-    {
-        carName.text = _carName;
-        carDescription.text = _carDescription;
-    }
 
     void GenerateCars()
     {
@@ -53,12 +49,19 @@ public class GameController : MonoBehaviour
         {
             GameObject previousCar = currentCar;
 
-            int index = UnityEngine.Random.Range(0, trainCars.Count );
+            int index = Random.Range(0, trainCars.Count );
             currentCar = Instantiate(trainCars[index], previousCar.GetComponent<TrainCar>().backOfCar.position, Quaternion.Euler(0, 0, 0));
             trainCars.RemoveAt(index);
         }
 
         UnityEditor.AI.NavMeshBuilder.BuildNavMesh();
+    }
+
+    public void SpawnItem()
+    {
+        int index = Random.Range(0, itemList.Count);
+        Instantiate(itemList[index], activeCar.itemSpawnLocation.position, Quaternion.Euler(0, 0, 0));
+        itemList.RemoveAt(index);
     }
 
     public IEnumerator SetItemText(string _itemName, string _itemDescription, Item item )
@@ -72,4 +75,12 @@ public class GameController : MonoBehaviour
         itemName.text = "";
         item.gameObject.SetActive(false);
     }
+
+    public void SetRoomText(string _carName, string _carDescription)
+    {
+        carName.text = _carName;
+        carDescription.text = _carDescription;
+    }
+
+
 }
