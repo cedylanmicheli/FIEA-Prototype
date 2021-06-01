@@ -34,14 +34,9 @@ public class ToadCarEnemies : MonoBehaviour
     {
         if (collision.collider.CompareTag("Toad"))
         {
-            DamageAndDestroy();
+            PlayerManager.instance.DamagePlayer((int)parent.damage);
+            GameController.instance.activeCar.ActiveEnemies.Remove(parent);
+            Destroy(parent.gameObject);
         }
-    }
-
-    public void DamageAndDestroy()
-    {
-        PlayerManager.instance.DamagePlayer((int)parent.damage);
-        GameController.instance.activeCar.ActiveEnemies.Remove(parent);
-        Destroy(parent.gameObject);
     }
 }

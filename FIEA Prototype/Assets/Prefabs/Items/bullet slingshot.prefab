@@ -13,7 +13,7 @@ PrefabInstance:
       objectReference: {fileID: 2062204258260492951}
     - target: {fileID: 8002719559063072216, guid: d69c1dabcf4777344a49836d128332f0, type: 3}
       propertyPath: itemDesc
-      value: sling those bullets
+      value: increased bullet speed
       objectReference: {fileID: 0}
     - target: {fileID: 8002719559063072216, guid: d69c1dabcf4777344a49836d128332f0, type: 3}
       propertyPath: itemName

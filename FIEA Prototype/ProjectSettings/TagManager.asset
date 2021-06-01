@@ -9,6 +9,7 @@ TagManager:
   - Bullet
   - Bouncer
   - Background Reset
+  - EnemyBullet
   layers:
   - Default
   - TransparentFX

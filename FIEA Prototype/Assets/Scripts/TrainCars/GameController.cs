@@ -22,6 +22,7 @@ public class GameController : MonoBehaviour
     public List<GameObject> trainCars = new List<GameObject>();
     public List<GameObject> itemList = new List<GameObject>();
     private Vector3 initalSpawn = new Vector3(0, 0, 0);
+    [SerializeField] private GameObject FinalCar;
 
     public TrainCar activeCar;
     
@@ -31,6 +32,8 @@ public class GameController : MonoBehaviour
     private TextMeshProUGUI carName, carDescription, itemName, itemDescription;
     public GameObject menuObj;
 
+    public NavMeshSurface[] navMeshes;
+
     private void Start()
     {
         carName.text = "";
@@ -39,11 +42,11 @@ public class GameController : MonoBehaviour
         itemName.text = "";
     }
 
-
     void GenerateCars()
     {
         GameObject currentCar = Instantiate(trainCars[0], initalSpawn, Quaternion.Euler(0, 0, 0));
         trainCars.RemoveAt(0);
+        currentCar.GetComponent<NavMeshSurface>().BuildNavMesh();
 
         for (int i = 0; i < carCount - 1; i++)
         {
@@ -52,16 +55,23 @@ public class GameController : MonoBehaviour
             int index = Random.Range(0, trainCars.Count );
             currentCar = Instantiate(trainCars[index], previousCar.GetComponent<TrainCar>().backOfCar.position, Quaternion.Euler(0, 0, 0));
             trainCars.RemoveAt(index);
+
+            currentCar.GetComponent<NavMeshSurface>().BuildNavMesh();
         }
 
-        UnityEditor.AI.NavMeshBuilder.BuildNavMesh();
+        Instantiate(FinalCar, currentCar.GetComponent<TrainCar>().backOfCar.position, Quaternion.Euler(0, 0, 0));
+
+       // UnityEditor.AI.NavMeshBuilder.BuildNavMesh();
     }
 
     public void SpawnItem()
     {
-        int index = Random.Range(0, itemList.Count);
-        Instantiate(itemList[index], activeCar.itemSpawnLocation.position, Quaternion.Euler(0, 0, 0));
-        itemList.RemoveAt(index);
+        if(itemList.Count > 0)
+        {
+            int index = Random.Range(0, itemList.Count);
+            Instantiate(itemList[index], activeCar.itemSpawnLocation.position, Quaternion.Euler(0, 0, 0));
+            itemList.RemoveAt(index);
+        }
     }
 
     public IEnumerator SetItemText(string _itemName, string _itemDescription, Item item )

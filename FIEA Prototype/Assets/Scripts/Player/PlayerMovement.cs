@@ -4,9 +4,9 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]
     private CharacterController cc;
-
     private PlayerManager Manager;
     private float moveHorizontal, moveVertical;
+    private float gravConstant = -9.81f;
 
     void Start()
     {
@@ -20,12 +20,11 @@ public class PlayerMovement : MonoBehaviour
         moveVertical = Input.GetAxisRaw("Vertical");
 
         if (cc.isGrounded) cc.Move(new Vector3(moveHorizontal, 0, moveVertical) * Manager.PlayerStats.moveSpeed * Time.deltaTime);
-        else cc.Move(new Vector3(moveHorizontal, -9.81f, moveVertical) * Manager.PlayerStats.moveSpeed * Time.deltaTime);
+        else cc.Move(new Vector3(moveHorizontal, gravConstant, moveVertical) * Manager.PlayerStats.moveSpeed * Time.deltaTime);
 
 
         LookAtMouse();
     }
-
 
     void LookAtMouse()
     {

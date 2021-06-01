@@ -60,6 +60,10 @@ PrefabInstance:
       value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 8341956474824443765, guid: 63c042ea8cb4a434abb61057e255d14a, type: 3}
+      propertyPath: enemySpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341956474824443765, guid: 63c042ea8cb4a434abb61057e255d14a, type: 3}
       propertyPath: enemyHealth
       value: 300
       objectReference: {fileID: 0}

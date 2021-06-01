@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using System;
 
 public class TrainCar : MonoBehaviour
 {
@@ -106,9 +105,18 @@ public class TrainCar : MonoBehaviour
             activeCar = false;
             if (gameObject.name.Equals("Tutorial Car(Clone)") == false) // this is kinda gross, fix this
             {
-                GameController.instance.SetRoomText("car complete!", "get your item on the way out!");
-                //play audio chime
-                GameController.instance.SpawnItem();
+                if (gameObject.name.Equals("Boss Car(Clone)") == false)
+                {
+                    GameController.instance.SetRoomText("car complete!", "get your item on the way out!");
+                    GameController.instance.SpawnItem();
+                }
+                else //Beat Boss
+                {
+                    GameController.instance.menuObj.SetActive(true);
+                    GameController.instance.menuObj.GetComponentInChildren<TextMeshProUGUI>().text = "YOU WIN";
+                    GameController.instance.activeCar.activeCar = false;
+                    Destroy(PlayerManager.instance.gameObject);
+                }
             }
             carCompleted = true;
         }

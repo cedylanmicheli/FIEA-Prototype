@@ -60,8 +60,20 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8341956474824443765, guid: 63c042ea8cb4a434abb61057e255d14a, type: 3}
+      propertyPath: enemySpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8341956474824443765, guid: 63c042ea8cb4a434abb61057e255d14a, type: 3}
       propertyPath: enemyHealth
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 8845538603421901450, guid: 63c042ea8cb4a434abb61057e255d14a, type: 3}
+      propertyPath: m_Volume
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 8845538603421901450, guid: 63c042ea8cb4a434abb61057e255d14a, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63c042ea8cb4a434abb61057e255d14a, type: 3}

@@ -1,3 +1,4 @@
+
 using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
@@ -36,11 +37,15 @@ public class PlayerManager : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.CompareTag("Enemy"))
-        {
+        { 
             EnemyController enemy = collision.gameObject.GetComponent<EnemyController>();
             DamagePlayer((int)enemy.damage);
             GameController.instance.activeCar.ActiveEnemies.Remove(enemy);
             Destroy(enemy.gameObject);
+        }
+        else if(collision.gameObject.CompareTag("EnemyBullet"))
+        {
+            DamagePlayer(collision.gameObject.GetComponent<Bullet>().enemyDamage);
         }
     }
 
@@ -55,7 +60,6 @@ public class PlayerManager : MonoBehaviour
             GameController.instance.menuObj.SetActive(true);
             GameController.instance.activeCar.activeCar = false;
             Destroy(gameObject);
-            //GameController.instance.activeCar.ActiveEnemies.Clear();
         }
     }
 
@@ -67,7 +71,7 @@ public class PlayerManager : MonoBehaviour
     public float baseDamage;
     public float baseAttackSpeed;
 
-    //These are the player's stats at any given moment, including modifiers from items and the train car. Only used in-editor
+    //These are the player's stats at any given moment, including modifiers from items and the train car. Used to view values within the Editor
     [Header("Current Stats")]
     public int currentMaxHealth;
     public float currentMoveSpeed;
